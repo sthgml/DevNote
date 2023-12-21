@@ -5,12 +5,10 @@
 
 💡 **교재**
 
-[2. JSX](https://megaptera.notion.site/2-JSX-e7dd48ccdc964b84b5d8b6dc2a67aff5)
-
+2. JSX
 ### 2주차 강의
 
-[JSX](https://megaptera.notion.site/JSX-ca593fdb9f5f4cc9923d5f3e16ad9680)
+JSX
 
 ### 과제
-
-[JSX 없이 React 만들기](https://megaptera.notion.site/JSX-React-8c3344bca05f411a8a9ce385edb5e5c1)
+JSX 없이 React 만들기
