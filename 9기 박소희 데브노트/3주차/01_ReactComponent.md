@@ -99,3 +99,7 @@ json.org
 1. Extract Function
     1. Refactoring.com
     1. 코드를 함수로 뺀다 = 이 코드가 어떤 의도를 갖고 작성된 코드인지, 어떤 동작을 하는지 설명을 하겠다
+    1. useRef
+    1. selectCategories... 어쩌구.. 계속계속 쪼개고 쪼개고..
+
+1. 여기까지가 정적인것 작동하게 하려면 어떻게 해야할까?
