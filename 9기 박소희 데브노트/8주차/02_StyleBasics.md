@@ -13,3 +13,7 @@
 참고 레퍼런스: https://developer.mozilla.org/ko/docs/Web/HTML/Reference
 
 </aside>
+
+id = html 내에서 하나만 존재해야됨 (웹표준)
+증거 (document.getElementById("") 하면 여러개가 있어도 하나의 태그만 리턴되지만, 
+document.getElementByClassName("") 하면 여러개의 HTMLCollection 이 반환됨.)
