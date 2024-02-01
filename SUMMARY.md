@@ -33,4 +33,10 @@
   * [02. Routes](/9기%20박소희%20데브노트/7주차/02_Routes.md)
   * [03. Router](/9기%20박소희%20데브노트/7주차/03_Router.md)
   * [04. Navigation](/9기%20박소희%20데브노트/7주차/04_Navigation.md)
-  
+* [8주차](/9기%20박소희%20데브노트/8주차)
+  * [01. DesignSystem](/9기%20박소희%20데브노트/8주차/01_DesignSystem.md)
+  * [02. StyleBaics](/9기%20박소희%20데브노트/8주차/02_StyleBaics.md)
+  * [03. CssinJS](/9기%20박소희%20데브노트/8주차/03_CssinJS.md)
+  * [04. styled-components](/9기%20박소희%20데브노트/8주차/04_styled-components.md)
+  * [05. props_attrs](/9기%20박소희%20데브노트/8주차/05_props_attrs.md)
+  * [06. GlobalStyles_Theme](/9기%20박소희%20데브노트/8주차/06_GlobalStyles_Theme.md)
