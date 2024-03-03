@@ -14,19 +14,19 @@
 
 💡 createByDataStructure 함수 에러 원인 파악
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/1d260432-5f76-4cf8-85f4-d6225fe09422/7854ff48-6a4c-4864-b7f4-ebaf0dc67f37/Untitled.png)
+![Untitled](/99_images/createByDatastructure_01.png)
 
 - 노드를 모두 연결한 후에 데이터 구조를 viewer노드에서 받아서 mockDataStructure에 저장한 다음에 버튼으로 뽑았더니 제대로 렌더 됨
 - 모든 노드가 순서대로 렌더됨을 확인함
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/1d260432-5f76-4cf8-85f4-d6225fe09422/209c0eca-59b8-4f4e-bf71-edb125493b40/Untitled.png)
+![Untitled](/99_images/createByDatastructure_02.png)
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/1d260432-5f76-4cf8-85f4-d6225fe09422/ab026f92-f324-4c5b-8e52-a0d072b32498/Untitled.png)
+![Untitled](/99_images/createByDatastructure_014.png)
 
 - BE에서 받은 데이터구조는 중간의 cat layer가 datset위치에 가있고, cat layer에 또 앞의 노드들이 input으로 담겨있음을 확인
 
 1. 전 모델 플로우랑 비교 - (12:30pm)
-    1. 목표: 모델이 달라졌는지 확인 
+    1. 목표: 모델이 달라졌는지 확인
         1. prevModelFlow를 node에 따로 저장해놓던지
         2. api 통신 두번 해서 같은지 비교하던지 (너무 통신낭비 아닌가?)
     2. 문제 원인:
