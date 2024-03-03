@@ -1,10 +1,10 @@
 # 박소희 데브노트
 
 * [Front-End DEV Note](/01_박소희%20데브노트/)
-  * [00_JavaScript_심화](/01_박소희%20데브노트/00_JavaScript)
-    *[01_실행컨텍스트](/01_박소희%20데브노트/00_JavaScript/01_실행컨텍스트.md)
-    *[02_콜스택과이벤트루프](/01_박소희%20데브노트/00_JavaScript/02_콜스택과이벤트루프.md)
-    *[03_비동기예외처리](/01_박소희%20데브노트/00_JavaScript/03_비동기예외처리.md)
+  * [00_JavaScript_심화](/01_박소희%20데브노트/00_JavaScript/)
+    * [02_콜스택과이벤트루프](/01_박소희%20데브노트/00_JavaScript/02_콜스택과이벤트루프.md)
+    * [03_비동기예외처리](/01_박소희%20데브노트/00_JavaScript/03_비동기예외처리.md)
+    * [01_실행컨텍스트](/01_박소희%20데브노트/00_JavaScript/01_실행컨텍스트.md)
   * [01_TypeScript&React](/01_박소희%20데브노트/01_TypeScript&React)
     * [01. FE Environment](/01_박소희%20데브노트/01_TypeScript&React/01_FE_Environment.md)
     * [02. TypeScript](/01_박소희%20데브노트/01_TypeScript&React/02_TypeScript.md)
