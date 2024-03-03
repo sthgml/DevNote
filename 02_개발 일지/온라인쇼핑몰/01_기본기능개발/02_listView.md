@@ -1,15 +1,29 @@
 # 상품 목록
 
-## JavaScript 심화
+## Tips
 
+import 문 정리순서 패키지 - 컴포넌트 - 훅 - 타입 - 유틸리티
+styled-component = GlobalStyles 에서 장난질 친거
 
+```css
+html {
+font-size:62.5%;
+}
+* {
+  font-size:inherit;
+}
+```
+
+=> 1rem = 10px로 조정
 
 상품 목록을 얻어서 표시하는 화면을 만들자. 말 그대로 다음과 같이 두 가지로 나눌 수 있다:
 
 1. 상품 목록 얻기
 2. 상품 목록 보여주기
 
-전자는 useFetchProducts 훅으로, 후자는 Products 컴포넌트로 구현하고, ProductListPage에선 이 둘을 조합한다.
+전자는 useFetchProducts 훅으로, 
+후자는 Products 컴포넌트로 구현하고
+ProductListPage에선 이 둘을 조합한다.
 
 ```tsx
 import Products from '../components/product-list/Products';
