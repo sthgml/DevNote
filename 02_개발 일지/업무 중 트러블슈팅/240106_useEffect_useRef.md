@@ -28,11 +28,11 @@ Context API외에 다른 상태 관리 라이브러리를 사용하지 않고 �
 
 이를 해결하고자 useEffect의 실행 시점과 그에 따른 상태와 props 값을 전달 받는 시점에 대해서 알아보았고, input컴포넌트에서 initOption.curret의 값을 확인하는 시점을 컴포넌트가 렌더링이 완료된 시점인 빈 배열인 상태가 아닌 최상위 컴포넌트에서 전달받는 initOption.current의 특정 값이 변경되는 시점으로 바꾸기 위해 의존 배열을 수정함으로써 이를 해결할 수 있었습니다.
 
-아래는 useEffect에 대해서 공부하기 위해 Complete Guide to useEffect라는 글을 한글로 번역한 내용입니다.
+아래는 JavaScript의 작동 방식에 대해서 공부한 내용과 useEffect에 대해서 공부하기 위해 [A Complete Guide to useEffect](https://overreacted.io/a-complete-guide-to-useeffect/)라는 글을 한글로 번역한 내용입니다.
 
-## useEffect 의 존재 이유
+## useEffect의 존재 이유
 
-useEffect의 이름은 왜 use Effect 일까? 이 때 effect의 의미는 효과라기보다는 영향, 결과의 의미로 사용되었다. 부작용을 의미하는 side-effect를 생각하면 이해가 쉬운데, 어떤 상태나 변수가 변경된 것의 부작용(?)으로 첫 번째 인자로 전달되는 함수가 실행되는 것이다. 
+useEffect의 이름은 왜 use Effect 일까? 이 때 effect의 의미는 효과라기보다는 영향, 결과의 의미로 사용되었다. 부작용을 의미하는 side-effect를 생각하면 이해가 쉬운데, 어떤 상태나 변수가 변경된 것의 부작용(?)으로 첫 번째 인자로 전달되는 함수가 실행되는 것이다.
 
 useEffect의 작동 원리를 알기 위해서는 자바스크립트의 실행 컨텍스트에 대한 이해가 선행되어야 한다.
 
@@ -41,9 +41,7 @@ useEffect는 두 번째 인자로 들어온 의존성 배열에 있는 state나 
 
 그렇다면 실행 컨텍스트란 무엇일까?
 
-실행 컨텍스트는 함수가 '호출'될 때 전달된다.
-
-따라서 useEffect에서 실행되는 함수 내의 상태나 props는 실시간으로 (동기적으로) 반영되지 않을 수 있다는 의미이다.
+실행 컨텍스트는 함수가 '호출'될 때 전달된다.따라서 useEffect에서 실행되는 함수 내의 상태나 props는 실시간으로 (동기적으로) 반영되지 않을 수 있다는 의미이다.
 
 반면, useRef를 사용한다면 실시간으로 적용될 수 있다.
 
