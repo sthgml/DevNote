@@ -2,9 +2,9 @@
 
 * [Front-End DEV Note](/01_박소희%20데브노트/)
   * [00_JavaScript_심화](/01_박소희%20데브노트/00_JavaScript/)
+    * [01_실행컨텍스트](/01_박소희%20데브노트/00_JavaScript/01_실행컨텍스트.md)
     * [02_콜스택과이벤트루프](/01_박소희%20데브노트/00_JavaScript/02_콜스택과이벤트루프.md)
     * [03_비동기예외처리](/01_박소희%20데브노트/00_JavaScript/03_비동기예외처리.md)
-    * [01_실행컨텍스트](/01_박소희%20데브노트/00_JavaScript/01_실행컨텍스트.md)
   * [01_TypeScript&React](/01_박소희%20데브노트/01_TypeScript&React)
     * [01. FE Environment](/01_박소희%20데브노트/01_TypeScript&React/01_FE_Environment.md)
     * [02. TypeScript](/01_박소희%20데브노트/01_TypeScript&React/02_TypeScript.md)
@@ -60,4 +60,5 @@
     * [240131_retejs_process.md](/02_개발%20일지/업무%20중%20트러블슈팅/240131_retejs_process.md)
     * [240216_mvc_api.md](/02_개발%20일지/업무%20중%20트러블슈팅/240216_mvc_api.md)
     * [240228_link_prevendDefault.md](/02_개발%20일지/업무%20중%20트러블슈팅/240228_link_prevendDefault.md)
+    * [240312_ContextProvider 실행 시점.md](/02_개발%20일지/업무%20중%20트러블슈팅/240312_ContextProvider%20실행%20시점.md)
     * [240229_CRUD C<->U 분기](/02_개발%20일지/업무%20중%20트러블슈팅/240229_CRUD.md)
