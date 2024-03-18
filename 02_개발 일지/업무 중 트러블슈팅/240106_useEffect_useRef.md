@@ -4,13 +4,13 @@
 
 서비스 특성 상 유저의 input 을 받아서 노드에 저장하고, 노드에 저장된 데이터와 새롭게 받아오는 데이터를 구분하여 동기화를 하는 것이 중요하였습니다. 그래서 input 컴포넌트를 개발하는데에 많은 시간을 투자하였습니다.
 
-고려해야할 부분은 여러 파트에서 쉽게 재사용이 가능해야 했고, 다양한 데이터 타입을 받아올 수 있어야 했습니다. 어려웠던 점은 데이터를 저장하고 관리하는 노드가 Model에 해당되었고, 사용자의 입력값을 받아오는 input 컴포넌트가 Control에 해당되었는데, 동시에 노드에 저장된 데이터를 표시하는 View역할도 해야하면서 데이터 동기화를 하는 시점에 따라서 초기값이 제가 의도한 대로 나오지 않는다는 문제상황에 맞닥뜨렸습니다.
+고려해야할 부분은 여러 파트에서 쉽게 재사용이 가능해야 했고, 다양한 데이터 타입을 받아올 수 있어야 했습니다. 어려웠던 점은 데이터를 저장하고 관리하는 노드가 Model에 해당되었고, 사용자의 입력값을 받아오는 input 컴포넌트가 Control에 해당되었는데, 동시에 노드에 저장된 데이터를 표시하는 View역할도 해야하면서 데이터 동기화를 하는 시점에 따라서 초기값이 제가 의도한 대로 나오지 않는다는 문제 상황에 맞닥뜨렸습니다.
 
 Context API외에 다른 상태 관리 라이브러리를 사용하지 않고 있어서, PanelContent > Section> OptionInputTuple > OptionInputItem 이렇게 props를 전달해주고 있었습니다.
 
-문제는 input값이 바뀔 때마다 Node.controls.ctrl.props.option에 이게 전달이 되고, input이 바뀔때마다 option값이 바뀌고, option값이 바뀔 때마다 ctrl.setValue를 해주고 있는데, setValue를 하면 prevOption이 바뀌어서 초기 설정이 자꾸 작동을 해서 무한루프를 도는 것이었습니다.
+문제는 input값이 바뀔 때마다 Node의 option에 이게 전달이 되고, input이 바뀔때마다 option값이 바뀌고, option값이 바뀔 때마다 Node에 setValue를 해주고 있는데, setValue를 하면 prevOption이 바뀌어서 초기화 함수가 다시 작동하는 무한루프가 생성되는 것이었습니다.
 
-처음 해결하기 위해 고안한 방법은 loading이라는 상태를 만들어, 초기값이 전달이 완료되면 loading을 false로 바꾸어주는 방법이었습니다.
+이를 해결하기 위해 고안한 방법은 loading이라는 상태를 만들어, 초기값이 전달이 완료되면 loading을 false로 바꾸어주는 방법이었습니다.
 
 1. 최상위 컴포넌트에서 loading, setLoading을 선언하고
 2. ctrl에서 받아오는 option을 prevOption으로,
@@ -20,7 +20,7 @@ Context API외에 다른 상태 관리 라이브러리를 사용하지 않고 �
 6. 최하위 상태 setTuple에 저장될때까지 setLoading을 true로 만들었고,
 7. 그 동안 setValue라던지 값을 설정해주는 함수들은 loading이 false여야만 작동할 수 있도록 수정했다.
 
-이렇게 하니 기존에는 node.controls.ctrl.props.option에 이미 값이 설정되어 있다면, 이것을 input에 표시를 해주고, 이를 state에 적용을 시키면 setValue가 일어났지만 loading이 false여서 업데이트가 되지 않았습니다.
+이렇게 하니 기존에는 node의 option에 이미 값이 설정되어 있다면 이것을 input에 표시를 해주었고, 이를 state에 적용을 시키면 setValue가 일어났지만 loading이 true여서 업데이트가 되지 않았습니다.
 
 이렇게 해결했다고 생각했지만,
 
