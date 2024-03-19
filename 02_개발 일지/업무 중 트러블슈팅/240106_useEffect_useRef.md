@@ -1,32 +1,55 @@
 # useEffect 제대로 사용하기
 
-## 업무 중 문제 상황
+## 개요
 
-서비스 특성 상 유저의 input 을 받아서 노드에 저장하고, 노드에 저장된 데이터와 새롭게 받아오는 데이터를 구분하여 동기화를 하는 것이 중요하였습니다. 그래서 input 컴포넌트를 개발하는데에 많은 시간을 투자하였습니다.
+![untitled](/99_images/vience-mlops-train-panel-light2.png)
 
-고려해야할 부분은 여러 파트에서 쉽게 재사용이 가능해야 했고, 다양한 데이터 타입을 받아올 수 있어야 했습니다. 어려웠던 점은 데이터를 저장하고 관리하는 노드가 Model에 해당되었고, 사용자의 입력값을 받아오는 input 컴포넌트가 Control에 해당되었는데, 동시에 노드에 저장된 데이터를 표시하는 View역할도 해야하면서 데이터 동기화를 하는 시점에 따라서 초기값이 제가 의도한 대로 나오지 않는다는 문제 상황에 맞닥뜨렸습니다.
+바이언스-mlops는 코딩 없이 노드를 연결하여 딥러닝 모델을 만들고 관리할 수 있는 시각적 프로그래밍 서비스입니다. 서비스 특성 상 유저의 input 을 받는 UI가 많았습니다. 또한 그 데이터를 노드에 저장하고, 노드에 저장된 데이터와 새롭게 받아오는 데이터를 구분하여 동기화를 하는 것이 중요하였습니다. 그래서 input 컴포넌트를 개발하는데에 많은 시간을 투자하였습니다.
 
-Context API외에 다른 상태 관리 라이브러리를 사용하지 않고 있어서, PanelContent > Section> OptionInputTuple > OptionInputItem 이렇게 props를 전달해주고 있었습니다.
+여러 파트에서 쉽게 재사용이 가능해야 했기 때문에 MVC 패턴을 적용하여 개발하고자 하였습니다. 데이터를 저장하고 관리하는 노드가 Model에 해당되었고, 사용자의 입력값을 받아오는 input 컴포넌트가 Control에 해당되었는데, 문제는 input 컴포넌트가 동시에 노드에 저장된 데이터를 표시하는 View 역할도 해야한다는 점이었습니다. 이 과정에서 데이터 동기화를 하는 시점과 방법에 따라서 초기값이 제가 의도한 대로 나오지 않는다는 문제 상황에 맞닥뜨렸습니다.
 
-문제는 input값이 바뀔 때마다 Node의 option에 이게 전달이 되고, input이 바뀔때마다 option값이 바뀌고, option값이 바뀔 때마다 Node에 setValue를 해주고 있는데, setValue를 하면 prevOption이 바뀌어서 초기화 함수가 다시 작동하는 무한루프가 생성되는 것이었습니다.
+| 역할 |  | 동작 | |
+| --- | --- | --- | --- |
+| Model | 노드 | 데이터 저장 | 데이터 업데이트|
+||| ⬇️ 저장된 데이터 전달 | ⬆️ 사용자 입력값 전달 |
+| Control | 인풋 컴포넌트 | 저장된 데이터 표시 | 사용자 입력값 받기 |
 
-이를 해결하기 위해 고안한 방법은 loading이라는 상태를 만들어, 초기값이 전달이 완료되면 loading을 false로 바꾸어주는 방법이었습니다.
+와 같은 플로우를 구축하는 과정에서 저장된 데이터가 전달되는 시점에 데이터 유무를 판단하고 초기값을 설정하는 과정에서 겪었던 어려움을 기록하려고 합니다.
 
-1. 최상위 컴포넌트에서 loading, setLoading을 선언하고
-2. ctrl에서 받아오는 option을 prevOption으로,
-3. setValue로 올려주는 option은 useState상태로
-4. 분리를 해준 뒤에
-5. prevOption이 최하위 컴포넌트 input ui에 표시되고,
-6. 최하위 상태 setTuple에 저장될때까지 setLoading을 true로 만들었고,
-7. 그 동안 setValue라던지 값을 설정해주는 함수들은 loading이 false여야만 작동할 수 있도록 수정했다.
+## 문제상황 1 - useEffect 무한루프
 
-이렇게 하니 기존에는 node의 option에 이미 값이 설정되어 있다면 이것을 input에 표시를 해주었고, 이를 state에 적용을 시키면 setValue가 일어났지만 loading이 true여서 업데이트가 되지 않았습니다.
+Context API외에 다른 상태 관리 라이브러리를 사용하지 않고 있어서, props는 PanelContent > Section> OptionInputTuple > OptionInputItem 을 거쳐 전달되고 있었습니다.
+
+처음 겪었던 문제는 input값이 바뀔 때마다 Node의 option에 전달이 되고, input이 바뀔때마다 option값이 바뀌고, option값이 바뀔 때마다 Node에 setValue를 해주고 있는데, setValue를 하면 prevOption이 바뀌어서 초기화 함수가 다시 작동하는 무한루프가 생성되는 것이었습니다.
+
+이를 해결하기 위해 고안한 방법은 받아오는 데이터와 올려보내는 데이터를 분리하고, loading이라는 상태를 만들어, 초기값이 전달이 완료되면 loading을 false로 바꾸어주는 방법이었습니다.
+
+1. 최상위 컴포넌트에서 `loading`, `setLoading`을 선언하고
+1. 노드에서 받아오는 option을 `prevOption`, useRef으로,
+1. setValue로 올려주는 `option은` useState상태로 분리를 해준 뒤에
+1. `prevOption` 이 최하위 컴포넌트 input ui에 표시되고,
+1. 최하위 상태 `setTuple` 에 저장될때까지 `loading`을 `true`로 만들었고,
+1. 그동안 `setValue` 와 같은 값을 설정해주는 함수들은 loading이 false여야만 작동할 수 있도록 수정했다.
+
+이렇게 하니 기존에는 node의 option에 이미 값이 설정되어 있는 경우에 이것을 input에 표시를 해주고, 이를 state에 적용을 시키면 setValue가 일어났지만 loading이 true여서 업데이트가 되지 않았습니다.
 
 이렇게 해결했다고 생각했지만,
 
-여기서 다시 발생한 문제는 기존 값이 있는데도 불구하고 초기값이 설정되는 경우가 있었습니다. 원인을 파악하기 위해 모든 컴포넌트의 setState전에 console을 넣어 확인해보니 option의 값을 useRef로 initOption.current에 전달을 해주고 있는데 이 initOption.current에 기존 option의 값들을 설정하기 전에 이미 최하위의 input 컴포넌트들이 렌더링이 완료된 다음, componentDidMount()처럼 사용하는 빈 useEffect가 실행되어 initOption.current의 값을 확인한 다음, 없다는 것을 확인하고 초기값을 넣어버린다는 것이었습니다.
+## 문제상황 2 - 저장된 데이터? 있는데요. 없습니다.
 
-이를 해결하고자 useEffect의 실행 시점과 그에 따른 상태와 props 값을 전달 받는 시점에 대해서 알아보았고, input컴포넌트에서 initOption.curret의 값을 확인하는 시점을 컴포넌트가 렌더링이 완료된 시점인 빈 배열인 상태가 아닌 최상위 컴포넌트에서 전달받는 initOption.current의 특정 값이 변경되는 시점으로 바꾸기 위해 의존 배열을 수정함으로써 이를 해결할 수 있었습니다.
+여기서 다시 발생한 문제는 노드에 저장된 값이 있는데도 불구하고 값이 없을 때 자동으로 설정되는 초기값이 나타나는 경우가 있었습니다. 
+
+원인을 파악하기 위해 모든 컴포넌트의 setState전에 console을 넣어 확인해보니... option의 값을 useRef로 `prevOption`에 전달을 해주고 있는데 이 `prevOption`에 기존 option의 값들을 설정하기 전에 이미 최하위의 input 컴포넌트들이 렌더링이 완료된 다음, componentDidMount()처럼 사용하는 빈 useEffect가 실행되어 `prevOption`의 값을 확인한 다음, 없다는 것을 확인하고 초기값을 넣어버린다는 것이었습니다.
+
+이를 해결하고자 useEffect의 실행 시점과 그에 따른 상태와 props 값을 전달 받는 시점에 대해서 알아보았고, input컴포넌트에서 `prevOption`의 값을 확인하는 시점을 컴포넌트가 렌더링이 완료된 시점인 빈 배열인 상태가 아닌 최상위 컴포넌트에서 전달받는 `prevOption`의 특정 값이 변경되는 시점으로 바꾸기 위해 의존 배열을 수정함으로써 이를 해결할 수 있었습니다.
+
+### 해결하는 과정에서 배운 점
+
+1. useEffect의 목적은 동기화다.
+1. 의존 배열에 객체를 넣지 말자.
+    1. 어떤 effect가 `prevOption` 내의 특정 키의 (객체타입이 아닌)값이 바뀔 때마다 작동하도록 하고 싶다면, 콕 집어서 `prevOption.current.name`과 같이 의존 배열에 명시해주자. prevOption만 넣을 경우에 객체는 변해도 useEffect가 감지할 수 없다. useEffect가 의존배열을 구분하는 방법은 `[] !== [] ? 실행 : 스킵` 메모리 주소 확인이니까.
+1. 따라서 useRef를 쓰는 경우에 주의하자. 항상 ref.current 속성에 값을 저장해놓는 객체이기 때문에 ref 만 넣는 실수를 많이 저지른다. (내가)
+1. state는 const, 상수이다. 즉, 하나의 리렌더 시점에 값을 바꾸고 해도 const 변수는 재할당이 불가능 하다. 값을 바꾸고 싶다면 리렌더가 한 번 더 일어나게 해야한다.
 
 아래는 JavaScript의 작동 방식에 대해서 공부한 내용과 useEffect에 대해서 공부하기 위해 [A Complete Guide to useEffect](https://overreacted.io/a-complete-guide-to-useeffect/)라는 글을 한글로 번역한 내용입니다.
 
@@ -34,16 +57,11 @@ Context API외에 다른 상태 관리 라이브러리를 사용하지 않고 �
 
 useEffect의 이름은 왜 use Effect 일까? 이 때 effect의 의미는 효과라기보다는 영향, 결과의 의미로 사용되었다. 부작용을 의미하는 side-effect를 생각하면 이해가 쉬운데, 어떤 상태나 변수가 변경된 것의 부작용(?)으로 첫 번째 인자로 전달되는 함수가 실행되는 것이다.
 
-useEffect의 작동 원리를 알기 위해서는 자바스크립트의 실행 컨텍스트에 대한 이해가 선행되어야 한다.
-
-useEffect는 두 번째 인자로 들어온 의존성 배열에 있는 state나 props가 바뀌면 첫 번재 인자인 함수가 실행될 수 있도록 한다.
-이 때 의존성 배열이 비어있을 경우에는 컴포넌트가 마운트 되었을 때 한 번만 실행된다.
+useEffect의 작동 원리를 알기 위해서는 자바스크립트의 실행 컨텍스트에 대한 이해가 선행되어야 한다. useEffect는 두 번째 인자로 들어온 의존성 배열에 있는 state나 props가 바뀌면 첫 번재 인자인 함수가 실행될 수 있도록 한다. 이 때 의존성 배열이 비어있을 경우에는 컴포넌트가 마운트 되었을 때 한 번만 실행된다.
 
 그렇다면 실행 컨텍스트란 무엇일까?
 
-실행 컨텍스트는 함수가 '호출'될 때 전달된다.따라서 useEffect에서 실행되는 함수 내의 상태나 props는 실시간으로 (동기적으로) 반영되지 않을 수 있다는 의미이다.
-
-반면, useRef를 사용한다면 실시간으로 적용될 수 있다.
+실행 컨텍스트는 함수가 '호출'될 때 전달된다. 따라서 useEffect에서 실행되는 함수 내의 상태나 props는 실시간으로 (동기적으로) 반영되지 않을 수 있다는 의미이다. 반면, useRef를 사용한다면 실시간으로 적용될 수 있다.
 
 ## JavaScript 실행 컨텍스트
 
@@ -84,73 +102,68 @@ useEffect는 두 번째 인자로 들어온 의존성 배열에 있는 state나 
 1. **ThisBinding**:
     1. 실행 컨텍스트 생성 시, 즉 함수가 호출될 때 할당되는 this의 정보를 담고 있음
 
-# 콜스택과 이벤트 루프
-
 ## 1. 콜 스택 (Call Stack)
 
-1. 개념
-    1. 함수가 호출되면 실행 컨텍스트가 생성되고 추가되는 공간
-    1. 함수 내부에서 호출되는 내부함수들은 콜스택에 추가되어 해당 위치에서 실행됨
-    1. 함수의 실행이 종료되면 실행컨텍스트가 제거됨
-    1. 중단된 시점부터 재시작
-1. 문제점
+### 1. 개념
+
+1. 함수가 호출되면 실행 컨텍스트가 생성되고 추가되는 공간
+1. 함수 내부에서 호출되는 내부함수들은 콜스택에 추가되어 해당 위치에서 실행됨
+1. 함수의 실행이 종료되면 실행컨텍스트가 제거됨
+1. 중단된 시점부터 재시작
+
+### 2. 문제점
+
     ![image](https://github.com/sthgml/DevNote/assets/41767015/5ad5fa43-18c2-4da7-8292-1468e0286dac)
     1. 한 함수가 오래걸리면 브라우저가 멈추어 사용성 측면에서 불편한 서비스가 됨
     1. 하지만 JS가 한 번에 여러 작업을 수행하는 것 처럼 보임
 
 ## 2. 이벤트 루프
 
-1. 기능 및 역할
-    1. JS는 단일스레드임에도 불구하고 비동기로 작업을 수행할 수 있게 함
-    1. Browser 환경임을 전제하에, 이벤트 루프에 기반한 동시성 모델을 가짐
-1. 모던 자바스크립트 엔진
-    ![image](https://github.com/sthgml/DevNote/assets/41767015/0cadc62e-fd43-44c4-b3b0-7a44c991dad7)
-    1. Heap:
-        1. 구조화 되지 않은 넓은 메모리 영역
-        1. JS의 Reference Type(참조형==객체)는 모두 여기 할당됨
-    1. Web API:
-        1. **브라우저**에서 제공하는 별도의 API (JS아님)
-        1. DOM, SVG, Fetch, Canvas, setTimeout 등
-    1. Callback Queue:
-        1. 비동기 함수가 실행된 후 콜백함수가 대기하는 공간
-    1. MicroTask Queue:
-        1. ES6에서 도입된 새로운 컨셉
-        1. Callback Queue와 동일한 계층에 존재하며 Promise를 통한 비동기 요청시의 콜백 함수가 대기하는 공간
-    1. Animation Frame:
-        1. requestAnimationFrame의 콜백함수가 대기하는 공간
-    1. Event Loop:
-        1. Call Stack과 각 작업 Queue들을 감시
-        1. Call Stack이 비었을 경우 우선순위에 따라 Queue에서 하나씩 꺼내 CallStack에 추가
-        1. 비동기 함수의 콜백 함수 처리 순서: (크롬 브라우저 엔진(V8)기준)
-            1. MicroTask (Promise)
-            1. Animation Frame
-            1. Callback
-        1. (ex)
+### 1. 기능 및 역할
 
-        ```js
-        console.log('start'); // (0)
-        setTimeout(() => {console.log('setTimeout')}, 0); // Callback (3)
-        requestAnimationFrame(()=>{console.log('rAF')}) // Animation Frame (2)
-        Promise.resolve().then(()=>{console.log('promise')}) // MicroTask (1)
-        console.log('end'); // (0-1)
-        ```
+  1. JS는 단일스레드임에도 불구하고 비동기로 작업을 수행할 수 있게 함
+  1. Browser 환경임을 전제하에, 이벤트 루프에 기반한 동시성 모델을 가짐
 
-        실행 결과는 => 'start' - 'end' - 'promise' - 'rAF' - 'setTimeout'
+### 2. 모던 자바스크립트 엔진
 
-    1. Zero Delay
-        1. setTimeout(()=>{}, 0) 을 하더라도 0ms 이후에 실행되는게 아님
-        1. setTimeout 내의 콜백함수는 가장 우선순위가 낮기 때문에 다른 비동기 콜백함수들이 모두 실행되고 난 뒤에 실행됨
-        1. 따라서 지연시간은 실행이 보장되는 시간이 아닌 최소 시간임을 알 수 있습니다.
+![image](https://github.com/sthgml/DevNote/assets/41767015/0cadc62e-fd43-44c4-b3b0-7a44c991dad7)
 
-### 해결하는 과정에서 배운 점
+1. Heap:
+    1. 구조화 되지 않은 넓은 메모리 영역
+    1. JS의 Reference Type(참조형==객체)는 모두 여기 할당됨
+1. Web API:
+    1. **브라우저**에서 제공하는 별도의 API (JS아님)
+    1. DOM, SVG, Fetch, Canvas, setTimeout 등
+1. Callback Queue:
+    1. 비동기 함수가 실행된 후 콜백함수가 대기하는 공간
+1. MicroTask Queue:
+    1. ES6에서 도입된 새로운 컨셉
+    1. Callback Queue와 동일한 계층에 존재하며 Promise를 통한 비동기 요청시의 콜백 함수가 대기하는 공간
+1. Animation Frame:
+    1. requestAnimationFrame의 콜백함수가 대기하는 공간
+1. Event Loop:
+    1. Call Stack과 각 작업 Queue들을 감시
+    1. Call Stack이 비었을 경우 우선순위에 따라 Queue에서 하나씩 꺼내 CallStack에 추가
+    1. 비동기 함수의 콜백 함수 처리 순서: (크롬 브라우저 엔진(V8)기준)
+        1. MicroTask (Promise)
+        1. Animation Frame
+        1. Callback
+    1. (ex)
 
-1. useEffect에 prevOption 내의 kernelSize 키의 밸류가 바뀔 때마다 작동하도록 하고 싶다면, prevOption만 넣을 경우에 객체는 변해도 useEffect가 감지할 수 없다.
-2. 따라서 useRef를 쓰는 경우에 주의하자. 항상 ref.current 속성에 값을 저장해놓는 객체이기 때문에 ref 만 넣는 실수를 많이 저지른다. (내가)
+    ```js
+    console.log('start'); // (0)
+    setTimeout(() => {console.log('setTimeout')}, 0); // Callback (3)
+    requestAnimationFrame(()=>{console.log('rAF')}) // Animation Frame (2)
+    Promise.resolve().then(()=>{console.log('promise')}) // MicroTask (1)
+    console.log('end'); // (0-1)
+    ```
 
-useEffect == 동기화
-빈 배열 (() => {
-    state
-    }, [값])
+    실행 결과는 => 'start' - 'end' - 'promise' - 'rAF' - 'setTimeout'
+
+1. Zero Delay
+    1. setTimeout(()=>{}, 0) 을 하더라도 0ms 이후에 실행되는게 아님
+    1. setTimeout 내의 콜백함수는 가장 우선순위가 낮기 때문에 다른 비동기 콜백함수들이 모두 실행되고 난 뒤에 실행됨
+    1. 따라서 지연시간은 실행이 보장되는 시간이 아닌 최소 시간임을 알 수 있습니다.
 
 ## Effect를 사용하기 위한 완전 가이드
 
