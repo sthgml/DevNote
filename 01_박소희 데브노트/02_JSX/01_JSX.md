@@ -1,5 +1,7 @@
 # JSX
+
 ## 1. 개념: JSX란????!
+
 - XML처럼 생긴,
 - JS를 확장한 문법이다.
 - React의 부산물
@@ -8,6 +10,7 @@
   - (VSC가  아톰의 부산물이었던 것처럼)
 - 일종의 Syntax Sugar임
 - html을 그대로 쓸 수 있고, JS코드와 1:1로 매칭된다.
+
   ```JSX
   (
     // 안에는 <> html 코드인데
@@ -16,12 +19,14 @@
   ```
 
 ## 2. 사용해보기
+
 https://babeljs.io/repl 에서 예시로 사용해보기 좋다.
 - 왼편에서 `Presets react`를 체크하거나
 - Add Plugin 에서 react-jsx를 검색해서 `@babel/plugin-transform-react-jsx`를 추가하면 JSX를 사용해볼 수 있다. 
 - ++) /* @jsx 어쩌구~ */ 라는 주석을 추가하면 React.createElement 부분이 어쩌구~함수로 대체된다!
 
 ### Example #1
+
 JSX 코드
 ```html
 <p>hello world</p> 
