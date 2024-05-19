@@ -1,5 +1,7 @@
 # 5. Parcel
+
 - parcel이란?
+
   - 빌드란?
     - 가장 큰 것은 번들러
     - 번들러, 모듈, zero configuration
@@ -14,12 +16,14 @@
   - 2. 패키지 - `npm i parcel-reporter-static-files-copy`
     - 그 후 .parcelrc 파일작성
     - .parcelrc에 들어갈 내용
+
       ```JSON
       {
         "extends": ["@parcel/config-default"],
         "reporters":  ["...", "parcel-reporter-static-files-copy"]
       }
       ```
+
     - => static 폴더의 파일을 정적 파일로 Serving 할 수 있다.
 
 - 명령어
@@ -37,12 +41,15 @@
     - 개발환경으로 다시 돌아오려면
 
 # 5-2. ESLint
+
 ## 1. 목적
+
 - 스타일 통일
 - 잠재적 문제 발견
 - 베스트 프랙티스 추천 -> 최신 트렌드를 학습하는데 활용 가능
 
 ## 2. 개요
+
 - lint : 보풀?
 - 소스코드를 분석하여 의심스러운 곳에 flag달아놓기
 - 정적 프로그램 분석: 실행되는 시간이 비교적 짧고 프로그램을 분석함
@@ -50,12 +57,14 @@
 - TSlint도 따로 있었는데 그것까지 커버를 해주게 되었다..
 
 ## 3. 사용법
+
 - npx eslint --ext .tsx
 - npm eslint --fix --ext .js,.jsx,.ts,.tsx . 하면 바로 고쳐줌
   - 이 명령어를 "lint"에 저장해놓으면 앞으로 npm run lint하면 사용가능~!
 - 신경쓰일때마다 터미널에 가서 저걸 쳐서 고쳐주는 것은 너무 번거롭기 때문에,
   - eslint 확장프로그램 esLint 설치 (install)
-  - .vscode 폴더 안에 settings.json 만들어서 
+  - .vscode 폴더 안에 settings.json 만들어서
+
     ```JSON
     {
       "editor.codeActionsOnSave": {
@@ -68,7 +77,9 @@
       "trailing-spaces.trimOnSave": true,
     }
     ```
+
   - npm run lint & npm run check
 
 ## 4. 추천하는 연습 방법
+
 지금까지의 모든 과정을 매일 아침 한 번씩 해보는 것!
