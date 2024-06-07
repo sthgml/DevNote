@@ -50,13 +50,13 @@ layout:
 
 ### 주차별 복습 기록
 
-* [2주차](https://sthgml.github.io/blog/Review/2%EC%A3%BC%EC%B0%A8%20%EB%B3%B5%EC%8A%B5)
-* [3주차](https://sthgml.github.io/blog/Review/3%EC%A3%BC%EC%B0%A8%20%EB%B3%B5%EC%8A%B5)
-* [4주차](https://sthgml.github.io/blog/Review/4%EC%A3%BC%EC%B0%A8%20%EB%B3%B5%EC%8A%B5)
-* [5주차](https://sthgml.github.io/blog/Review/5%EC%A3%BC%EC%B0%A8%20%EB%B3%B5%EC%8A%B5)
-* [6주차](https://sthgml.github.io/blog/Review/6%EC%A3%BC%EC%B0%A8%20%EB%B3%B5%EC%8A%B5)
-* [7주차](https://sthgml.github.io/blog/Review/7%EC%A3%BC%EC%B0%A8%20%EB%B3%B5%EC%8A%B5)
-* [8주차](https://sthgml.github.io/blog/Review/8%EC%A3%BC%EC%B0%A8%20%EB%B3%B5%EC%8A%B5)
-* [9주차](https://sthgml.github.io/blog/Review/9%EC%A3%BC%EC%B0%A8%20%EB%B3%B5%EC%8A%B5)
-* [10주차](https://sthgml.github.io/blog/Review/10%EC%A3%BC%EC%B0%A8%20%EB%B3%B5%EC%8A%B5)
+* [2주차](23-07-23-11-or-fe/2.md)
+* [3주차](23-07-23-11-or-fe/3.md)
+* [4주차](23-07-23-11-or-fe/4.md)
+* [5주차](23-07-23-11-or-fe/5.md)
+* [6주차](23-07-23-11-or-fe/6.md)
+* [7주차](23-07-23-11-or-fe/7.md)
+* [8주차](23-07-23-11-or-fe/8.md)
+* [9주차](23-07-23-11-or-fe/9.md)
+* [10주차](23-07-23-11-or-fe/10.md)
 * [11주차](https://sthgml.github.io/blog/Review/11%EC%A3%BC%EC%B0%A8%20%EB%B3%B5%EC%8A%B5)
