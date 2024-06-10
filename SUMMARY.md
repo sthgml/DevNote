@@ -1,6 +1,6 @@
 # Table of contents
 
-* [🤩 DevNote 소개](README.md)
+* [🤩 DevNote 소개](README.md)
 * [23/07 - 23/11 | 멋사 FE 스쿨](<README (1).md>)
   * [2주차 복습일지](23-07-23-11-or-fe/2.md)
   * [3주차 복습일지](23-07-23-11-or-fe/3.md)
