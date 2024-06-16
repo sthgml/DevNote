@@ -33,6 +33,5 @@
 
 ## 개선점
 
-1. ~~아 이거 다시만들까?~~
 1. save를 setInterval한 useEffect의 의존배열을 params, title, settings로 설정 => params, settings, title이 바뀔 때마다 setInterval이 실행되고, 바뀌기 직전에 clearInterval이 실행됨!
 1. setInit을 하는 useEffect의 의존배열에 editor와 editable 두 가지가 있는데, editor는 rete가 불러와지면 바로 바뀌기 때문에 저게 설정되는 시점으로 하면 너무 빠르며, 처음 렌더링 된 시점(1), editor가 설정된 시점(2)으로 두 번 실행 됨 (editable은 처음 렌더링 될 때도 true 바꿀 때도 true이기 때문에 렌더링 이후에 바뀌지 않음 => 리렌더링을 유발하지 않음 => editable로 설정한 의존 배열 = 빈 배열로 설정한 것과 마찬가지)
