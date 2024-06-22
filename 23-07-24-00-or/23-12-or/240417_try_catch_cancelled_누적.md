@@ -2,10 +2,9 @@
 
 ## 개요
 
-createNode 함수는 주어진 label에 따라 그 종류의 node를 생성하고 addNode 함수에 생성한 노드를 전달하여 rete 에디터에 node를 추가하는 함수입니다. 이 때 addNode를 try catch문에 넣었더니, 새로고침 할 때마다 cancelled error가 딱 두 배씩 늘어나는 에러가 발생했다.
+createNode 함수는 주어진 label에 따라 그 종류의 node를 생성하고 addNode 함수에 생성한 노드를 전달하여 rete 에디터에 node를 추가하는 함수다. 이 때 addNode를 try catch문에 넣었더니, 새로고침 할 때마다 cancelled error가 딱 두 배씩 늘어나는 에러가 발생했다.
 
 <!-- 왜지? 단순히 try catch가 문제가 아닐 것 같아 -->
-
 
 ![맨 처음](/99_images/240417_try_catch_cancelled_누적/image-2.png)
 ![새로 고침 한 번](/99_images/240417_try_catch_cancelled_누적/image-3.png)
@@ -62,8 +61,6 @@ rete의 destroy 함수가 editor가 unmount될 때 editor를 파괴시켜줬는�
 
 저장된 내역을 console로 뽑아보니, 새로고침 할 때마다 connection이 중복되어서 계속 생성되고 있었다. 그래서 딱 uncaught error도 두 배씩 늘 고 있었던 것이다. 근데 왜, connection이 중복되어 생성되며, try catch만 제외해봤을 때 동일한 에러가 재현되지 않는지 알아내야 했다.
 
-알고 보니 문제는 발생되고 있었고, catch문으로 발견되지 않았을 뿐이었다. try catch에서 catch에서 이미 노드가 다 추가되었다고 뜨면서 노드는 추가되지 않았고, 그 이후에 connection은 중복을 검사하지 않고 생성하고 있었다.
-
 ### 의심 4 + 해결. getCanvas() 함수
 
 그렇다면 남은 피의(?)자는 MlopsEditor 페이지를 새로 고침할 때, 문제가 발생하는 것으로 미루어보아, 처음 로딩할 때 실행되는 getCanvas() 함수가 잘 작동하는지 여부였다. console로 찍어본 결과 get Canvas가 두 번 실행되는 것을 발견했다.
@@ -76,7 +73,9 @@ editor는 createEditor라는 rete 내장함수로 생성되기 때문에 처음 
 
 ![useEffect의 의존 배열에 editor가 변함에 따라 두 번 실행되었다 (처음에 없을 때, createEditor로 생겼을 때)](/99_images/240417_try_catch_cancelled_누적/image-9.png)
 
-setInit()이 두 번 실행되어서 getCanvas를 두 번 실행시키니까, BE에서 받아온 Json을 토대로 노드랑 connections을 생성하는 함수도 두 번 실행되었는데, 노드는 노드 id도 같이 전달받아가지고 이미 id가 있는 노드면 추가할 때 rete자체에서 error를 생성하여서 중복되는 것을 방지해주었지만, conns는 애초에 저장할 대 conns id 도 같이 받질 않아서 다시 생성할 때 중복인지 체크할 id가 없었다.
+setInit() 안에는 createNodes()와 createConnections()함수가 분리되어 있는데 전자만 try catch로 중단시키면서 노드는 추가되지 않았고, 그 이후에 connection은 중복을 검사하지 않고 생성하고 있었던 것이었다.
+
+근데 setInit()이 두 번 실행되어서 getCanvas를 두 번 실행시키니까, BE에서 받아온 Json을 토대로 nodes랑 connections을 생성하는 함수도 두 번 실행되었는데, 노드는 노드 id도 같이 전달받아서 이미 id가 있는 노드면 추가할 때 rete자체에서 error를 생성하여서 중복되는 것을 방지해주었지만, conns는 애초에 저장할 때 conns id 도 같이 받질 않아서 다시 생성할 때 중복인지 체크할 id가 없었다.
 
 그래서 두 번 실행되면 두 번 실행 되는 대로 conns를 생성해주고 있었던 것이다.
 
