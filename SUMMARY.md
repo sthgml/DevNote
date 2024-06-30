@@ -45,4 +45,3 @@
     * [240106\_useEffect\_useRef](23-07-24-00-or/23-12-or/240106\_useeffect\_useref.md)
     * [240131\_retejs\_process.md](23-07-24-00-or/23-12-or/240131\_retejs\_process.md)
     * [240216\_mvc\_api.md](23-07-24-00-or/23-12-or/240216\_mvc\_api.md)
-    * [240417\_try\_catch\_cancelled\_누적.md](23-07-24-00-or/23-12-or/240417\_try\_catch\_cancelled\_누적.md)
