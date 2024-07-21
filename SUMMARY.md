@@ -49,4 +49,4 @@
   * [01\_개발환경설정](24-07-25-00/0715/README.md)
     * [01. Node.js](24-07-25-00/0715/node.js.md)
     * [02. 패키지 매니저 (Package Manager)](24-07-25-00/0715/package-manager.md)
-    * [03. AWS S3 & CloudFront](24-07-25-00/0715/AWS-S3.md)
+    * [03. AWS S3 & CloudFront](24-07-25-00/0715/AWS-S3+CloudFront.md)
