@@ -45,3 +45,7 @@
     * [240106\_useEffect\_useRef](23-07-24-00-or/23-12-or/240106\_useeffect\_useref.md)
     * [240131\_retejs\_process.md](23-07-24-00-or/23-12-or/240131\_retejs\_process.md)
     * [240216\_mvc\_api.md](23-07-24-00-or/23-12-or/240216\_mvc\_api.md)
+* [24/07 - 25/00 개인 프로젝트](24-07-25-00/README.md)
+  * [0715 개발환경설정](24-07-25-00/0715/README.md)
+    * [Node.js](24-07-25-00/0715/node.js.md)
+    * [패키지 매니저 (Package Manager)](24-07-25-00/0715/package-manager.md)
