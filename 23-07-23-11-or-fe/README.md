@@ -38,11 +38,7 @@ layout:
 
 <figure><img src="https://sthgml.github.io/blog/images/planner_ex_01.png" alt="1회차 복습 후"><figcaption><p>직후 : 1회차 복습 후</p></figcaption></figure>
 
- 
-
 <figure><img src="https://sthgml.github.io/blog/images/planner_ex_02.png" alt="2회차 복습 후"><figcaption><p>다음 날 : 2회차 복습 후</p></figcaption></figure>
-
- 
 
 <figure><img src="https://sthgml.github.io/blog/images/planner_ex_03.png" alt="3회차 복습 후"><figcaption><p>일주일 후 : 3회차 복습 후</p></figcaption></figure>
 

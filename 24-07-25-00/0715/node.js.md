@@ -177,6 +177,7 @@ node js 앱 만들기 ← 노드 js runtime : 노드 js 가 가진 기능을 활
 
        app.listen(3000);
        ```
+
    * response로 넘겨주던 파일을 template으로 활용
    * 내가 필요한 부분만 literal로 포함시키기
 2. Node.js로 CRUD 구현하기
@@ -235,6 +236,7 @@ node js 앱 만들기 ← 노드 js runtime : 노드 js 가 가진 기능을 활
        app.listen(3000);
 
        ```
+
    *   파일을 읽어오는 방법
 
        ```jsx
@@ -252,10 +254,11 @@ node js 앱 만들기 ← 노드 js runtime : 노드 js 가 가진 기능을 활
        	`
        })
        ```
+
 3. Node.js로 cli에서 입력값을 받아오기
    1. 실행시킬 때 뒤에 문자열 입력
    2. `var args = process.argv;`
-   3.  전체 코드
+   3. 전체 코드
 
        ```jsx
        var args = process.argv;
@@ -289,8 +292,9 @@ node js 앱 만들기 ← 노드 js runtime : 노드 js 가 가진 기능을 활
        */
 
        ```
+
 4. 폴더의 변경사항 받아오기
-   1.  readdir.js
+   1. readdir.js
 
        ```jsx
        var testFolder = './data';
@@ -300,7 +304,8 @@ node js 앱 만들기 ← 노드 js runtime : 노드 js 가 가진 기능을 활
        	console.log(filelist);
        });
        ```
-   2.  받아온 list를 토대로 \<li> 태그 만들기
+
+   2. 받아온 list를 토대로 \<li> 태그 만들기
 
        ```jsx
        function createTemplateList(fileList) {
@@ -415,19 +420,19 @@ app.listen(3000);
       4. 위의 작업이 끝나면 “end” 이벤트가 발생하고
       5. 이를 다음의 함수로 감지할 수 있다.
       6. request.on(”end”, ()⇒{}) : 이벤트가 감지되면 콜백함수가 실행되고 여기서 querystring모듈을 활용해서 body내용을 parsing한다.
-      7.  form에서 설정했던 name이 key이고 사용자가 입력한 내용이 value로 합쳐진 하나의 객체가 반환된다!
+      7. form에서 설정했던 name이 key이고 사용자가 입력한 내용이 value로 합쳐진 하나의 객체가 반환된다!
 
           ```jsx
           var qs = require("querystring");
           ...
           var body = '';
           request.on("data", (data) => {
-          	body += data;
+            body += data;
           });
 
           request.on("end", () => {
-          	var post = qs.parse(body);
-          	console.log(post);
+            var post = qs.parse(body);
+            console.log(post);
           })
           ...
           // >> {title: "nodejs", description: "nodesjs is awesome"}
