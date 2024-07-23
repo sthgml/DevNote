@@ -173,54 +173,54 @@ https://rainbound.tistory.com/entry/AWS-cloudfront-S3%EC%97%B0%EB%8F%99-OAI%EB%A
 ### 6-2. S3 bucket
 
 1. s3 bucket 생성하기
-    ![alt text](image.png)
+    ![alt text](/99_images/240723_aws_s3+cloudfront/image.png)
 1. 파일을 bucket에 업로드 하기
-    ![alt text](image-1.png)
+    ![alt text](/99_images/240723_aws_s3+cloudfront/image-1.png)
 1. bucket 정책 수정하기
-    ![alt text](image-2.png)
+    ![alt text](/99_images/240723_aws_s3+cloudfront/image-2.png)
 1. s3 정적 호스팅하기
     1. 속성 탭의 가장 아래
-    ![alt text](image-3.png)
+    ![alt text](/99_images/240723_aws_s3+cloudfront/image-3.png)
     1. 정적 웹사이트 호스팅 활성화
-    ![alt text](image-4.png)
+    ![alt text](/99_images/240723_aws_s3+cloudfront/image-4.png)
     1. 확인해보기
-    ![alt text](image-5.png)
+    ![alt text](/99_images/240723_aws_s3+cloudfront/image-5.png)
 
 ### 6-3. Cloudfront
 
-![alt text](image-7.png)
+![alt text](/99_images/240723_aws_s3+cloudfront/image-7.png)
 
 1. cloudfront 배포 생성하기
     1. 원본으로 s3 bucket 연결하기
-        ![alt text](image-8.png)
+        ![alt text](/99_images/240723_aws_s3+cloudfront/image-8.png)
     1. 원본 액세스 제한하기
-        ![alt text](image-9.png)
+        ![alt text](/99_images/240723_aws_s3+cloudfront/image-9.png)
     1. 기본 캐시 동작
-        ![alt text](image-10.png)
+        ![alt text](/99_images/240723_aws_s3+cloudfront/image-10.png)
     1. 도메인 연결은 나중에 여기서
-        ![alt text](image-11.png)
+        ![alt text](/99_images/240723_aws_s3+cloudfront/image-11.png)
     1. 하고 나면 버킷 권한을 수정하라고 알림이 뜬다. 일단 냅두고 도메인을 구매하러 갑니다.
-        ![alt text](image-12.png)
+        ![alt text](/99_images/240723_aws_s3+cloudfront/image-12.png)
 
 ### 6-4. route 53
 
 1. 도메인 구매하기
 1. ACM AWS certificate manager에서 퍼블릭 인증서 요청하기
     1. 리전이 버지니아 북부인지 확인하기!
-    ![alt text](image-13.png)
+    ![alt text](/99_images/240723_aws_s3+cloudfront/image-13.png)
     1. 인증서 요청
-    ![alt text](image-14.png)
+    ![alt text](/99_images/240723_aws_s3+cloudfront/image-14.png)
     1. 구매한 도메인 이름으로 퍼블릭 인증서 요청
-    ![alt text](image-15.png)
+    ![alt text](/99_images/240723_aws_s3+cloudfront/image-15.png)
     1. 검증을 위해 route 53에서 record 생성하기
-    ![alt text](image-16.png)
+    ![alt text](/99_images/240723_aws_s3+cloudfront/image-16.png)
 1. 도메인에 레코드 추가하기
 1. 도메인 cloudfront 배포 도메인 연결하기
         1. cloudfront > 일반 > 설정 > 편집
-        ![alt text](image-17.png)
+        ![alt text](/99_images/240723_aws_s3+cloudfront/image-17.png)
         1. alternative domain name에 설정하기
         1. 발급 완료된 SSL을 custom ssl certificate 에 추가하기
-        ![alt text](image-18.png)
+        ![alt text](/99_images/240723_aws_s3+cloudfront/image-18.png)
 1. 퍼블릭 액세스를 차단하고 cloudfront로만 접근 가능하게 하기위해 s3 bucket 권한 수정하기
     1. cloudfront 원본 > 편집
     1. 정책 복사하기
@@ -229,9 +229,9 @@ https://rainbound.tistory.com/entry/AWS-cloudfront-S3%EC%97%B0%EB%8F%99-OAI%EB%A
     1. 붙여넣기
     1. s3 퍼블릭 액세스 차단 항목 편집
         1. 다시 모든 퍼블릭 액세스 차단 선택
-        ![alt text](image-19.png)
+        ![alt text](/99_images/240723_aws_s3+cloudfront/image-19.png)
     1. 확인해보면 이제 public도메인은 접근이 불가능하고, cloudfront는 접근 가능함
-        ![alt text](image-20.png)
+        ![alt text](/99_images/240723_aws_s3+cloudfront/image-20.png)
 
 ### 6-5. SPA 새로고침시 404 에러 해결
 
