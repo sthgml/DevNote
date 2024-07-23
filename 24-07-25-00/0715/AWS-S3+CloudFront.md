@@ -136,3 +136,110 @@
         1. AWS WAF
         1. AWS Shield
 
+<!-- ## 5. Route53에서 도메인 연결하기
+
+### 5-1. record?
+
+1. DNS 서버에 어떤 URL이 어떤 IP 또는 서비스 등으로 매핑 되는지 알려주는 설정을 말함
+
+```json
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "PublicRead",
+			"Effect": "Allow",
+			"Principal": "*",
+			"Action": [
+				"s3:GetObject",
+				"s3:GetObjectVersion"
+			],
+			"Resource": "arn:aws:s3:::keyduck-keydueck-2/*"
+		}
+	]
+}
+```
+
+**제어 설정 생성의 이름은 원본 도메인과 일치해야 합니다!!! 다르면 AccessDenied 뜹니다~!~!**
+
+https://rainbound.tistory.com/entry/AWS-cloudfront-S3%EC%97%B0%EB%8F%99-OAI%EB%A5%BC-%EC%9D%B4%EC%9A%A9-access-denied-%EB%AC%B8%EC%A0%9C-%EA%B4%80%EB%A0%A8-%ED%95%B4%EA%B2%B0 -->
+
+## 6. 배포해보기
+
+### 6-1. 사전 준비
+
+1. 정적 파일 준비하기 build
+
+### 6-2. S3 bucket
+
+1. s3 bucket 생성하기
+    ![alt text](image.png)
+1. 파일을 bucket에 업로드 하기
+    ![alt text](image-1.png)
+1. bucket 정책 수정하기
+    ![alt text](image-2.png)
+1. s3 정적 호스팅하기
+    1. 속성 탭의 가장 아래
+    ![alt text](image-3.png)
+    1. 정적 웹사이트 호스팅 활성화
+    ![alt text](image-4.png)
+    1. 확인해보기
+    ![alt text](image-5.png)
+
+### 6-3. Cloudfront
+
+![alt text](image-7.png)
+
+1. cloudfront 배포 생성하기
+    1. 원본으로 s3 bucket 연결하기
+        ![alt text](image-8.png)
+    1. 원본 액세스 제한하기
+        ![alt text](image-9.png)
+    1. 기본 캐시 동작
+        ![alt text](image-10.png)
+    1. 도메인 연결은 나중에 여기서
+        ![alt text](image-11.png)
+    1. 하고 나면 버킷 권한을 수정하라고 알림이 뜬다. 일단 냅두고 도메인을 구매하러 갑니다.
+        ![alt text](image-12.png)
+
+### 6-4. route 53
+
+1. 도메인 구매하기
+1. ACM AWS certificate manager에서 퍼블릭 인증서 요청하기
+    1. 리전이 버지니아 북부인지 확인하기!
+    ![alt text](image-13.png)
+    1. 인증서 요청
+    ![alt text](image-14.png)
+    1. 구매한 도메인 이름으로 퍼블릭 인증서 요청
+    ![alt text](image-15.png)
+    1. 검증을 위해 route 53에서 record 생성하기
+    ![alt text](image-16.png)
+1. 도메인에 레코드 추가하기
+1. 도메인 cloudfront 배포 도메인 연결하기
+        1. cloudfront > 일반 > 설정 > 편집
+        ![alt text](image-17.png)
+        1. alternative domain name에 설정하기
+        1. 발급 완료된 SSL을 custom ssl certificate 에 추가하기
+        ![alt text](image-18.png)
+1. 퍼블릭 액세스를 차단하고 cloudfront로만 접근 가능하게 하기위해 s3 bucket 권한 수정하기
+    1. cloudfront 원본 > 편집
+    1. 정책 복사하기
+    1. s3 권한 수정하러 가기
+    1. 버킷 정책 편집
+    1. 붙여넣기
+    1. s3 퍼블릭 액세스 차단 항목 편집
+        1. 다시 모든 퍼블릭 액세스 차단 선택
+        ![alt text](image-19.png)
+    1. 확인해보면 이제 public도메인은 접근이 불가능하고, cloudfront는 접근 가능함
+        ![alt text](image-20.png)
+
+### 6-5. SPA 새로고침시 404 에러 해결
+
+1. cloudfront의 오류 페이지 응답 생성 * 2
+    1. HTTP 에러 코드: 404, 403
+    1. Customize error response: Yesy
+        1. Response page path: /index.html
+        1. http response code: 200
+1. cloudfront의 무효화
+    1. 무효화 생성
+    1. 객체 경로 추가: /*
