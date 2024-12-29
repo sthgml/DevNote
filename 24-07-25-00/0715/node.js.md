@@ -30,8 +30,7 @@ node js 앱 만들기 ← 노드 js runtime : 노드 js 가 가진 기능을 활
 1. 웹 브라우저와 웹서버의 관계
    1. 웹 브라우저
       1. 주소를 입력해서 요청한다.
-   2.  웹 서버
-
+   2. 웹 서버
        1. 요청에 따른 정보를 찾아서 응답해주는 관계
        2. 1.html, 2.html … 등등이 있는 폴더에서 server.js파일을 만들고 노드로 실행시키면
        3. [localhost:3000](http://localhost:3000) 을 통해서 브라우저에서 접근이 가능하다
@@ -110,7 +109,7 @@ node js 앱 만들기 ← 노드 js runtime : 노드 js 가 가진 기능을 활
 ### 5-2. response 동적으로 변경하기
 
 1. 파일 → text
-   *   전체 코드
+   * 전체 코드
 
        ```jsx
        var http = require('http');
@@ -181,7 +180,7 @@ node js 앱 만들기 ← 노드 js runtime : 노드 js 가 가진 기능을 활
    * response로 넘겨주던 파일을 template으로 활용
    * 내가 필요한 부분만 literal로 포함시키기
 2. Node.js로 CRUD 구현하기
-   *   전체 코드
+   * 전체 코드
 
        ```jsx
        var http = require('http');
@@ -237,21 +236,21 @@ node js 앱 만들기 ← 노드 js runtime : 노드 js 가 가진 기능을 활
 
        ```
 
-   *   파일을 읽어오는 방법
+   * 파일을 읽어오는 방법
 
        ```jsx
        // fs 모듈 임포트 하기
        var fs = require("fs");
        ...
        fs.readSync(”경로”, “인코딩방식”, (err, data)⇒{
-       	// file읽기 이후에 할 동작
-       	var template = `
-       	<!doctype=HTML>
-       	...
-       	${title}
-       	...
-       	${data}
-       	`
+        // file읽기 이후에 할 동작
+        var template = `
+        <!doctype=HTML>
+        ...
+        ${title}
+        ...
+        ${data}
+        `
        })
        ```
 
@@ -301,7 +300,7 @@ node js 앱 만들기 ← 노드 js runtime : 노드 js 가 가진 기능을 활
        var fs = require('fs');
 
        fs.readdir(testFolder, function(error, filelist) {
-       	console.log(filelist);
+        console.log(filelist);
        });
        ```
 

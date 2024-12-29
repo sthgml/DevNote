@@ -6,7 +6,6 @@ createNode 함수는 주어진 label에 따라 그 종류의 node를 생성하�
 
 <!-- 왜지? 단순히 try catch가 문제가 아닐 것 같아 -->
 
-
 ![맨 처음](/99_images/240417_try_catch_cancelled_누적/image-2.png)
 ![새로 고침 한 번](/99_images/240417_try_catch_cancelled_누적/image-3.png)
 ![새로 고침 두 번](/99_images/240417_try_catch_cancelled_누적/image-4.png)
